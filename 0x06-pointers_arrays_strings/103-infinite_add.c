@@ -14,11 +14,11 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r);
  * If r cannot store the sum - 0.
  */
 char *add_strings(char *n1, char *n2, char *r, int r_index)
-{	
+{
 	int num, tens = 0;
 
 	for (; *n1 && *n2; n1--, n2--, r_index--)
-	{	
+	{
 		num = (*n1 - '0') + (*n2 - '0');
 		num += tens;
 		*(r + r_index) = (num % 10) + '0';
@@ -26,7 +26,7 @@ char *add_strings(char *n1, char *n2, char *r, int r_index)
 	}
 
 	for (; *n1; n1--, r_index--)
-	{	
+	{
 		num = (*n1 - '0') + tens;
 		*(r + r_index) = (num % 10) + '0';
 		tens = num / 10;
@@ -38,11 +38,17 @@ char *add_strings(char *n1, char *n2, char *r, int r_index)
 		*(r + r_index) = (num % 10) + '0';
 		tens = num / 10;
 	}
-	
+
 	if (tens && r_index >= 0)
-	{	
+	{
 		*(r + r_index) = (tens % 10) + '0';
 		return (r + r_index);
+	}
+
+	else if (tens && r_index < 0)
+		return (0);
+
+	return (r + r_index + 1);
 }
 /**
  * infinite_add - Adds two numbers.
@@ -72,5 +78,4 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 	*(r + size_r) = '\0';
 
 	return (add_strings(n1, n2, r, --size_r));
-}	
-
+}
